@@ -1,0 +1,8 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\Open SRV Aqui]
+@="Abrir SRV (SWL) Aqui"
+"Icon"="C:\\Users\\%USERNAME%\\Pictures\\icons\\SRV.ico"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\Open SRV Aqui\command]
+@="cmd.exe /c cd /d \"%V\" && bash.exe"

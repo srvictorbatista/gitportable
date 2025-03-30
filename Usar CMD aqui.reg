@@ -1,0 +1,10 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\Open CMD Aqui]
+@="Prompt CMD Aqui (como Administrador)"
+"Icon"="cmd.exe"
+"NeverDefault"=""
+"NoWorkingDirectory"=""
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\Open CMD Aqui\command]
+@="PowerShell.exe -WindowStyle Hidden -Command \"Start-Process cmd.exe -ArgumentList '/s /k pushd \"%V%\"' -Verb RunAs\""

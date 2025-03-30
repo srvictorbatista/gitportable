@@ -1,0 +1,125 @@
+README.portable
+=======================
+
+Esta versão do Git para Windows é portátil, ou seja, não precisa ser instalada. Ele será executado a partir de qualquer diretório onde você o colocar, 
+inclusive de um pendrive USB. Ele não escreverá entradas permanentes no registro do Windows. Não precisa de privilégios de administrador para "instalar".
+
+
+Instalação
+------------
+
+Diferenças funcionais em relação ao Git para Windows não portátil
+------------------------------------------------------------------------
+
+Esta versão oferece as entradas convenientes no menu de contexto do clique com o botão direito "Git Bash Aqui", "Prompt CMD Aqui (como Administrador)", 
+"PowerShell Aqui (como Administrador)" e "Abrir SRV (SWL) Aqui", sendo aplicadas por meio de adição de entradas no registro do Windows.
+Executanto os scripts correspondentes "ADICIONAR GIT AO CONTEXTO.CMD", "Usar CMD aqui.reg", "Usar PowerShell aqui.reg" e "Usar SRV aqui.reg".
+
+
+Aviso
+------
+
+Como este pacote portátil não modifica nenhuma variável de %path% do Windows, não é possível executar diretamente os arquivos git.exe e gitk.exe. 
+Inicie o Git Bash ou Git Cmd em vez disso, ou adicione a pasta `cmd/`, seu %path% ou execute os por meio do meu de contexto (apos ativar o script correspondente).
+
+
+Como começar a usar o PortableGit
+----------------------------------
+
+Se você está confortável com um shell semelhante ao Unix, basta iniciar `git-bash.exe`.
+
+Se não, basta iniciar `git-cmd.exe`.
+
+Alternativamente, você pode executar estes comandos para modificar temporariamente a variável %path%:
+
+        set gitdir=c:\portablegit
+        set path=%gitdir%\cmd;%path%
+
+Ajuste o 'gitdir' conforme sua configuração. Enquanto você não fechar a janela do prompt de comando, agora pode simplesmente digitar "git" ou "gitk" 
+para realmente chamar "c:\portablegit\cmd\git.exe" ou "c:\portablegit\cmd\gitk.exe".
+
+Por padrão, `git-cmd` e `git-bash` usam o diretório em que foram iniciados como diretório de trabalho. Você pode substituir isso passando `--cd-to-home` 
+para eles, o que definirá o diretório inicial do usuário como diretório de trabalho (como se o Git para Windows estivesse instalado).
+
+Além disso, se você definir a variável de ambiente HOME (permanentemente ou apenas para a sessão atual), poderá fazer com que o Git armazene e use os 
+arquivos de configuração no diretório especificado nessa variável. Se você especificar `--cd-to-home`, `git-bash` e `git-cmd` também usarão esse 
+diretório como diretório de trabalho ao serem iniciados. Por exemplo:
+
+        set HOME=%cd%/home
+        git --cd-to-home
+
+Isso utilizará o diretório relativo chamado home (%cd% especifica o diretório atual).
+
+
+Início rápido
+---------------
+
+Comece configurando o Git com suas configurações pessoais:
+
+        git config --global user.name "Seu Nome Aqui"
+        git config --global user.email seu.nome.aqui@mail.com
+	git config --global --list
+
+	# gerar a key SSH na pasta do uaaurio padrão
+	ssh-keygen -t rsa -b 4096 -C "seu.nome.aqui@mail.com"
+	clip < ~/.ssh/id_rsa.pub
+
+	# gerar a key SSH na pasta que voce definir
+	ssh-keygen -t rsa -b 4096 -C "seu.nome.aqui@mail.com" -f "D:/Pasta_escolhida/keys/id_rsa" -y
+	clip < "D:/Pasta_escolhida/keys/id_rsa.pub"
+
+	# carregue o agente de SSH local no bash
+	eval "$(ssh-agent -s)"
+	
+	# carregue a chave no agente de SSH local
+	ssh-add "D:/Pasta_escolhida/keys/id_rsa"
+
+	# verificar se a chave foi carregada pelo agente local
+	ssh-add -l
+
+	# verificar se a chave foi carregada corretamente para o git
+	cat "D:/Pasta_escolhida/keys/id_rsa.pub"
+
+	# use a chave de autenticação em 
+	https://github.com/settings/ssh/new
+
+	# teste
+	ssh -T git@github.com  	# Precisa aparecer: Hi seu-usuario! (...)
+
+## [IMPORTANTE]
+Problemas com o arquivo de configuração SSH (solução opcional)
+Se você tiver várias chaves SSH ou se sua chave SSH não estiver sendo usada corretamente, 
+você pode criar ou editar o arquivo de configuração ~/.ssh/config para forçar o uso da chave correta. 
+O arquivo deve ser assim:
+
+Host github.com
+  User git
+  HostName github.com
+  IdentityFile D:/Pasta_escolhida/keys/id_rsa
+
+Lembre-se de trocar "D:/Pasta_escolhida/keys" pela sua pasta. Recomendo (nao o brigatoriamente) 
+que apasta keys, fique contida na raiz deste projeto. Mas você é livre para organizar isto como preferir.
+
+
+Comece a usar o Git:
+
+        git --help
+
+
+Como alterar %path% permanentemente
+-----------------------------------
+
+Você pode querer tornar a modificação da variável %path% permanente. A variável %path% pode ser alterada:
+
+* no nível do sistema (para todos os usuários, no painel inferior), se você for um Administrador
+* ou apenas para sua conta de usuário (no painel superior).
+
+Para alterar permanentemente a variável %path%:
+
+* clique com o botão direito em "Meu Computador",
+* selecione "Propriedades",
+* abra "Avançado",
+* clique em "Variáveis de Ambiente",
+* destaque a variável "Path",
+* clique em "Editar" (no painel superior ou inferior),
+* adicione seu caminho específico ao início do campo "Valor da variável", separado por um ponto e vírgula da entrada existente.
